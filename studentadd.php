@@ -6,12 +6,11 @@ if (isset($_POST['Submit'])) {
 	$schoolboard = $_POST['schoolboard'];
 	if(!isset($errorMsg)){
 		$sql = "insert into student(Name, School_board) values('".$name."', '".$schoolboard."')";
-		$result = mysqli_query($conn, $sql);
-		if($result){
+		if ($mysqli->query($sql) === TRUE) {
 			$successMsg = 'New record added successfully';
 			header('Location: index.php');
 		}else{
-			$errorMsg = 'Error '.mysqli_error($conn);
+			$errorMsg = 'Error '.$mysqli->error;
 		}
 	}
 }
