@@ -40,7 +40,7 @@ include "header.php";
         <form class="" action="" method="post" enctype="multipart/form-data">
           <div class="form-group">
             <label for="grade">new grade</label>
-            <select class="custom-select mr-sm-2" id="grade">
+            <select class="custom-select mr-sm-2" name="grade" id="grade">
               <option selected>Choose...</option>
               <option value="1">1</option>
               <option value="2">2</option>
