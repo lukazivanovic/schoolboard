@@ -1,8 +1,8 @@
 <?php
+require('config/klase.php');
 include "header.php";
-include "connect.php";
-$query = "SELECT * FROM student";
-$result = $mysqli->query($query);
+
+$student = $conn->getAllStudents();
 ?>
     <div class="main">
         <div class="container">
@@ -22,17 +22,19 @@ $result = $mysqli->query($query);
                 </thead>
                 <tbody>
                     <?php
-                    while($row = mysqli_fetch_array($result)) {
-                        if($row['School_board']=="CSM"){
-                        echo "<tr>";
-                        echo "<th scope='row'>".$row['ID']."</th>";
-                        echo "<td>".$row['Name']."</td>";
-                        echo "<td>".$row['Average']."</td>";
-                        echo "<td>".$row['Final_result']."</td>"; ?>
+                    if($student!=false){
+                        foreach($student as $stu){ 
+                        if ($stu[4]=="CSM") { ?>
+                        <tr>
+                        <th scope='row'><?php echo $stu[0]; ?></th>
+                        <td><?php echo $stu[1]; ?></td>
+                        <td><?php echo $stu[2]; ?></td>
+                        <td><?php echo $stu[3]; ?></td>
                         <td>
-                            <a href="student.php?id=<?php echo $row['ID'] ?>" class="btn btn-dark"><i class="fa fa-eye"></i></a>
+                            <a href="student.php?id=<?php echo $stu[0] ?>" class="btn btn-dark"><i class="fa fa-eye"></i></a>
                         </td>
-                        <?php echo "</tr>";
+                        </tr>
+                        <?php }
                         }
                     }
                     ?>
@@ -51,18 +53,20 @@ $result = $mysqli->query($query);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    while($row = mysqli_fetch_array($result)) {
-                        if($row['School_board']=="CSMB"){
-                        echo "<tr>";
-                        echo "<th scope='row'>".$row['ID']."</th>";
-                        echo "<td>".$row['Name']."</td>";
-                        echo "<td>".$row['Average']."</td>";
-                        echo "<td>".$row['Final_result']."</td>"; ?>
+                <?php
+                    if($student!=false){
+                        foreach($student as $stu){ 
+                        if ($stu[4]=="CSMB") { ?>
+                        <tr>
+                        <th scope='row'><?php echo $stu[0]; ?></th>
+                        <td><?php echo $stu[1]; ?></td>
+                        <td><?php echo $stu[2]; ?></td>
+                        <td><?php echo $stu[3]; ?></td>
                         <td>
-                            <a href="student.php?id=<?php echo $row['ID'] ?>" class="btn btn-dark"><i class="fa fa-eye"></i></a>
+                            <a href="student.php?id=<?php echo $stu[0] ?>" class="btn btn-dark"><i class="fa fa-eye"></i></a>
                         </td>
-                        <?php echo "</tr>";
+                        </tr>
+                        <?php }
                         }
                     }
                     ?>
@@ -72,10 +76,6 @@ $result = $mysqli->query($query);
             </div>
         </div>
 
-        <?php
-            $result->close();
-            $mysqli->close();
-        ?>
 </div>
 <?php
 include "footer.php";

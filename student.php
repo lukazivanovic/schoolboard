@@ -1,45 +1,38 @@
 <?php
 include "header.php";
+require('config/klase.php');
+$id = $_GET['id'];
 ?>
 <div class="main">
   <div class="container">
     <?php
-    include "connect.php";
-    if (isset($_GET['id'])) {
-      $id = $_GET['id'];
-      $sql = "select * from student where ID=".$id;
-      $result = mysqli_query($mysqli, $sql);
-      if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-      }else {
-        $errorMsg = 'Could not Find Any Record';
-      }
-    }
-    if(isset($_POST['Submit'])){
-      $grade = $_POST['grade'];
-      if(!isset($errorMsg)){
-        $sql = "insert into grade(Student_ID, Grade) values('".$id."', '".$grade."')";
-        $result = mysqli_query($mysqli, $sql);
-        if($result){
-          $successMsg = 'New record updated successfully';
-          header('Location:index.php');
-        }else{
-          $errorMsg = 'Error '.mysqli_error($mysqli);
-        }
-      }
-    }
+    $student = $conn->getStudent($id);
     ?>
-    <p>
-      Name: <?php echo $row['Name']; ?></br>
-      School board: <?php echo $row['School_board']; ?></br>
-      Final result: <?php echo $row['Final_result']; ?></br>
-    </p>
     <div class="row justify-content-center">
       <div class="col-md-6">
         <a class="btn btn-primary" href="index.php" role="button">back</a>
+        <p>
+          Name: <?php echo $student['Name']; ?></br>
+          School board: <?php echo $student['School_board']; ?></br>
+          Grades:
+          <ul>
+            <?php 
+            $grades = $conn->getGrades($id);
+            if($grades!=false){
+              foreach($grades as $grade){ ?>
+                <li><?php echo $grade[2]; ?></li>
+            <?php
+              }
+            }else {
+              echo "(no grades)";
+            }
+            ?>
+          </ul>
+          <br>Final result: <?php echo $student['Final_result']; ?></br>
+        </p>
         <form class="" action="" method="post" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="grade">new grade</label>
+            <label for="grade" class="col-form-label">new grade</label>
             <select class="custom-select mr-sm-2" name="grade" id="grade">
               <option selected>Choose...</option>
               <option value="1">1</option>
@@ -58,6 +51,14 @@ include "header.php";
             <button type="submit" name="Submit" class="btn btn-primary waves">add grade</button>
           </div>
         </form>
+        <?php
+        if(isset($_POST['Submit'])){
+          $Grade = $_POST['grade'];
+          $Student_ID = $id;
+          $conn->addGrade($Student_ID,$Grade);
+          echo "New grade added successfully.";
+        }
+        ?>
       </div>
     </div>
   </div>
