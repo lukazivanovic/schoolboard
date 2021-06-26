@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 22, 2021 at 03:30 PM
+-- Generation Time: Jun 26, 2021 at 01:53 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -39,12 +39,14 @@ CREATE TABLE `grade` (
 --
 
 INSERT INTO `grade` (`ID`, `Student_ID`, `Grade`) VALUES
-(1, 2, 0),
-(2, 2, 0),
-(3, 2, 0),
-(4, 2, 10),
-(5, 2, 4),
-(6, 2, 8);
+(59, 12, 4),
+(60, 12, 9),
+(61, 12, 10),
+(62, 12, 6),
+(63, 13, 7),
+(64, 13, 6),
+(65, 13, 6),
+(66, 13, 10);
 
 -- --------------------------------------------------------
 
@@ -56,7 +58,7 @@ CREATE TABLE `student` (
   `ID` int(11) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `Average` decimal(10,2) NOT NULL,
-  `Final_result` enum('Fail','Pass') NOT NULL,
+  `Final_result` enum('Not graded','Fail','Pass') NOT NULL,
   `School_board` enum('CSM','CSMB') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -65,9 +67,8 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`ID`, `Name`, `Average`, `Final_result`, `School_board`) VALUES
-(1, 'John Doe', '0.00', 'Fail', 'CSMB'),
-(2, 'ASDAS FEQGRG', '0.00', 'Fail', 'CSM'),
-(3, 'RBWR RVWRGG', '0.00', 'Fail', 'CSMB');
+(12, 'Pgrgwr Fsfgeqqg', '8.33', 'Pass', 'CSMB'),
+(13, 'Bob Ross', '7.25', 'Pass', 'CSM');
 
 --
 -- Indexes for dumped tables
@@ -77,8 +78,7 @@ INSERT INTO `student` (`ID`, `Name`, `Average`, `Final_result`, `School_board`) 
 -- Indexes for table `grade`
 --
 ALTER TABLE `grade`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Student_ID` (`Student_ID`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `student`
@@ -94,23 +94,13 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `grade`
 --
 ALTER TABLE `grade`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `grade`
---
-ALTER TABLE `grade`
-  ADD CONSTRAINT `grade_ibfk_1` FOREIGN KEY (`Student_ID`) REFERENCES `student` (`id`);
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

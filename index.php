@@ -1,5 +1,5 @@
 <?php
-require('config/klase.php');
+require('klase.php');
 include "header.php";
 
 $student = $conn->getAllStudents();

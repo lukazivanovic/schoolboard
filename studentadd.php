@@ -1,6 +1,6 @@
 <?php
 include "header.php";
-require('config/klase.php');
+require('klase.php');
 ?>
 <div class="main">
 	<div class="container">
@@ -32,7 +32,7 @@ require('config/klase.php');
 					$name = $_POST['name'];
 					$schoolboard = $_POST['schoolboard'];
 					$conn->addStudent($name,$schoolboard);
-					echo "Student added successfully.";
+					header('Location: index.php');
 				}
 				?>
 			</div>	

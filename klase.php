@@ -45,6 +45,28 @@
 		$stmt->close();
 	}
 
+	function averageCSM($id){
+		$stmt=$this->konekt->prepare("SELECT AVG(Grade) AS average FROM Grade WHERE ID=?");
+		$stmt->bind_param("i",$id);
+		$stmt->execute();
+		$averagesCSM = $stmt->get_result();
+		$avgCSM = $averagesCSM->fetch_assoc();
+		$avg = $avgCSM['average'];
+		return $avg;
+		$stmt->close();
+	}
+
+	function averageCSMB($id){
+		$stmt=$this->konekt->prepare("SELECT AVG(Grade) AS average FROM Grade WHERE ID=?");
+		$stmt->bind_param("i",$id);
+		$stmt->execute();
+		$averagesCSMB = $stmt->get_result();
+		$avgCSMB = $averagesCSMB->fetch_assoc();
+		$avg = $avgCSMB['average'];
+		return $avg;
+		$stmt->close();
+	}
+
 	function getGrades($id){
 		$stmt=$this->konekt->prepare("SELECT * FROM grade WHERE Student_ID=?");
 		$stmt->bind_param("i", $id);
@@ -66,6 +88,29 @@
 		$stmt->close();
 	}
 	
+	function setAverage($Average,$Student_ID){
+		$stmt=$this->konekt->prepare("UPDATE student SET Average=? WHERE ID=?");
+		$stmt->bind_param("si",$Average,$Student_ID);
+		$stmt->execute();
+		return true;
+		$stmt->close();
+	}
+
+	function setFailed($Student_ID){
+		$stmt=$this->konekt->prepare("UPDATE student SET Final_result='Fail' WHERE ID=?");
+		$stmt->bind_param("i",$Student_ID);
+		$stmt->execute();
+		return true;
+		$stmt->close();
+	}
+
+	function setPassed($Student_ID){
+		$stmt=$this->konekt->prepare("UPDATE student SET Final_result='Pass' WHERE ID=?");
+		$stmt->bind_param("i",$Student_ID);
+		$stmt->execute();
+		return true;
+		$stmt->close();
+	}
 }
 
 $conn = new Konekcija('localhost','root','','schoolboard');
