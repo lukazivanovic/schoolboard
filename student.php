@@ -104,14 +104,40 @@ $id = $_GET['id'];
           header('Location: index.php');
         } 
         ?>
-
-      <p>A student can have 1 to 4 grades.
+      <br>Output: </br>
       <?php 
-      if($student['School_board']=="CSM"){ ?>
-        CSM considers pass if the average is bigger or equal to 7 and fail otherwise.</p>
-      <?php }else if($student['School_board']=="CSMB"){ ?>
-        CSMB discards the lowest grade, if you have more than 2 grades, and considers pass if his biggest grade is bigger than 8.</p>
-      <?php } ?>
+      if($student['School_board']=="CSM"){
+        $CSM = new \stdClass();
+        $CSM->id = $student['ID'];
+        $CSM->name = $student['Name']; 
+        $gradearray = array();
+        $gradecountnumber = 0;
+        foreach($grades as $grade){
+          $gradearray[$gradecountnumber] = $grade[2];
+          $gradecountnumber++;
+        }
+        $CSM->grades = $gradearray;
+        $CSM->average = $student['Average'];
+        $CSM->result = $student['Final_result'];
+        $JSON = json_encode($CSM);
+        echo $JSON;
+      }else if($student['School_board']=="CSMB"){ 
+        $xml = new SimpleXMLElement('<xml/>');
+        $studentXML = $xml->addChild('student');
+        $studentXML->addChild('id', $student['ID']);
+        $studentXML->addChild('name', $student['Name']);
+        $gradearray = array();
+        $gradecountnumber = 0;
+        foreach($grades as $grade){
+          $gradearray[$gradecountnumber] = $grade[2];
+          $gradecountnumber++;
+        }
+        $gradearrayText = implode(", ", $gradearray);
+        $studentXML->addChild('grades', $gradearrayText);
+        $studentXML->addChild('average', $student['Average']);
+        $studentXML->addChild('final_result', $student['Final_result']); 
+        echo $xml->asXML();
+      } ?>
       </div>
     </div>
   </div>

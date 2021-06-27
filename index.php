@@ -7,6 +7,11 @@ $student = $conn->getAllStudents();
     <div class="main">
         <div class="container">
             <div id="content">
+                <p>A student can have 1 to 4 grades.</p>
+                <p>CSM considers pass if the average is bigger or equal to 7 and fail otherwise. Returns JSON format</p>
+                <p>CSMB discards the lowest grade, if you have more than 2 grades, and considers pass if his biggest grade is bigger than 8. Returns XML format</p>
+                <p> Each student result, either XML or JSON, will contain the student id, name, list of grades, average and final result (Fail, Pass)</p>
+
                 <a class="btn btn-primary" href="studentadd.php" role="button">Add a student...</a>
 
                 <h1>CSM</h1>
